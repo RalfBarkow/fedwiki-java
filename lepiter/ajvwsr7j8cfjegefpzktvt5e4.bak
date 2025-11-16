@@ -1,0 +1,487 @@
+{
+	"__schema" : "4.1",
+	"__type" : "page",
+	"children" : {
+		"__type" : "snippets",
+		"items" : [
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:01:13.852456+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:01:13.852456+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "RIw3Lg8ADgCj5b6RBSM+sg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "At a high level, **fedwiki-java is a tiny, opinionated “federated wiki interpreter”**; fedwiki-smalltalk can treat it as:\n\n* a *reference implementation* of link/context semantics, and\n* a *scriptable probe* for federated neighborhoods that Smalltalk/GT can then visualize and enrich.\n\nLet me walk through the concrete hooks. [chatgpt](https://chatgpt.com/g/g-p-69193c0fd6208191b8ae6d1252dd909a/c/69193c8f-e2f0-8331-8ef8-c62abd12582f)\n"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T03:59:01.898317+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:03:54.335361+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "kxxaJg8ADgCjutviBSM+sg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "### TL;DR\n\n* Treat **fedwiki-java** as a **minimal, executable spec** of:\n\n  * FedWiki JSON domain model,\n  * collaborative linking semantics,\n  * lineup navigation,\n  * neighborhood via sitemaps,\n  * and a simple command language.\n\n* In **fedwiki-smalltalk**, mirror:\n\n  * the `Page/Item/Action/SiteMap` model,\n  * `Panel`/lineup/`context` behavior,\n  * the command interpreter.\n\n* Use `input.txt` + `output.txt` as **cross-language tests**: Smalltalk should be able to reproduce the same walk through the federation.\n\n* `color.html` then becomes either a shared visualizer for both, or a design pattern for a richer GT view.\n\nIf you like, next step I can sketch a **minimal set of Smalltalk classes/methods** (names + responsibilities) that would make fedwiki-smalltalk “conform to” fedwiki-java’s behavior.\n"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [
+						{
+							"__type" : "textSnippet",
+							"children" : {
+								"__type" : "snippets",
+								"items" : [ ]
+							},
+							"createEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"createTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2025-11-16T04:01:35.280138+01:00"
+								}
+							},
+							"editEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"editTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2025-11-16T04:04:41.597935+01:00"
+								}
+							},
+							"uid" : {
+								"__type" : "uid",
+								"uidString" : "9IF+Lw8ADgCj9x3RBSM+sg=="
+							},
+							"paragraphStyle" : {
+								"__type" : "textStyle"
+							},
+							"string" : "From the repomix snapshot, the Java app is basically:\n\n1. **A command interpreter over stdin** (see `README.md` and `Main.main`):\n   Supported commands:\n\n   * `case words` – just logs a motivating description.\n   * `next` / empty line – advance within current page.\n   * `test word` – regex test against current item text.\n   * `find word` – advance until an item matches.\n   * `link` – follow first wiki link in current item.\n   * `back word` – pop lineup back to a page whose title matches.\n   * `exit` – quit.\n\n2. **A runtime notion of “where we are” in the federation**:\n\n   * `origin` site, `slug` (`welcome-visitors` by default).\n   * `lineup : List<Panel>` – the stack of pages we’ve followed.\n   * `neighborhood : Map<String,SiteMap>` – site → sitemap.json cache.\n\n3. **A “Panel” abstraction** that represents one page in the lineup:\n\n   ```java\n   private static class Panel {\n     public String site;\n     public String slug;\n     public Page page;\n     public int itemno;\n     ...\n   }\n   ```\n\n   Key responsibilities:\n\n   * `Panel.load(site, slug)` – fetch current page JSON.\n   * `Panel.load(from, slug)` – collaborative linking: try origin, then a *context* of sites derived from journal + the current item’s `site`.\n   * `next()` – rotate through items.\n   * `item()` – current `Item`.\n   * `context()` – sites derived from `Page.context()` plus current panel’s site.\n   * `link()` – slug of first `[[Link]]` in current item.\n\n4. **Federated Wiki JSON model** (POJOs with Jackson):\n\n   * `Page` (title, story, journal, `context()` based on journal.site).\n   * `Item` (type, id, title, text, site, slug, `links()` via `[[...]]` pattern).\n   * `Action` (journal entries).\n   * `PageInfo` and `SiteMap` (from `/system/sitemap.json`).\n\n5. An example **command script and transcript**:\n\n   * `input.txt` – a scripted walk through the federation (Ward’s dojo + neighbors).\n   * `output.txt` – what the interpreter prints while executing those commands.\n\n6. **color.html** – a FedWiki page plugin that:\n\n   * fetches `output.txt` from a known site,\n   * interprets ANSI color codes,\n   * renders collapsible `case` sections (`<details><summary>...`) and\n   * makes hostnames clickable into the federation via `frame.js`.\n\nSo: **fedwiki-java = headless CLI crawler + tiny domain model + collaborative-linking resolution + “neighborhood via sitemap”.**\n"
+						}
+					]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:04:41.58887+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:04:41.58887+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "UFuZOg8ADgCketHkBSM+sg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "## 1. What fedwiki-java actually does (in terms that matter for Smalltalk)"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [
+						{
+							"__type" : "textSnippet",
+							"children" : {
+								"__type" : "snippets",
+								"items" : [ ]
+							},
+							"createEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"createTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2025-11-16T04:01:55.833011+01:00"
+								}
+							},
+							"editEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"editTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2025-11-16T04:04:11.557945+01:00"
+								}
+							},
+							"uid" : {
+								"__type" : "uid",
+								"uidString" : "Ng+4MA8ADgCkBdY7BSM+sg=="
+							},
+							"paragraphStyle" : {
+								"__type" : "textStyle"
+							},
+							"string" : "Assuming fedwiki-smalltalk is your Pharo/GT take on a FedWiki client / tools, here is a direct mapping of concepts and responsibilities.\n\n### 2.1 Domain model parity\n\nYou can **mirror the Java POJOs 1:1** as Smalltalk domain objects:\n\n* `Main.Page`  →  `FwPage` (or similar)\n* `Main.Item`  →  `FwItem`\n* `Main.Action`  →  `FwJournalAction`\n* `Main.PageInfo` → `FwPageInfo`\n* `Main.SiteMap` → `FwSiteMap`\n\nImportant behaviors to keep *semantically* identical:\n\n* `Page>>context` ⇔ `Main.Page.context()`\n\n  > Collect `journal[i].site` from newest to oldest, unique, non-nil. This is your *context* site list.\n\n* `Item>>links` ⇔ `Main.Item.links()`:\n\n  * regex for `[[...]]` in `text`\n  * slug normalization:\n\n    * replace whitespace with `-`\n    * strip non-alphanumeric / `-`\n    * lowercase using locale.\n\nIf fedwiki-smalltalk already has page/item/journal classes, you can still treat this as a **conformance target**: match the Java behavior for context and slug generation so neighborhood traversal matches Ward’s scripts.\n\n### 2.2 Collaborative linking semantics\n\nThe key bit you probably care about in Smalltalk is the **link resolution algorithm** in `Panel.load(Panel from, String slug)`:\n\n1. Start with the *from* panel’s `context()` (journal-derived sites).\n2. If the current item has a `site`, ensure that site is at the **front** of context (and removed from its previous position).\n3. Try to fetch `slug.json` from `origin`.\n4. If not found:\n\n   * iterate over `context` sites in order,\n   * for each, try `http://site/slug.json`.\n5. If nothing found → `trouble(\"can't find page in current context\")`.\n\nIn fedwiki-smalltalk, this suggests:\n\n* A **`FwPanel`** (or `FwLineupNode`) with:\n\n  * `site`, `slug`, `page`, `itemIndex`\n  * `contextSites` method implementing the above logic.\n* A **service** (`FwPageFetcher` / `FwNeighborhood`) that knows how to fetch JSON from sites and maintain a cache of `/system/sitemap.json` per site (like `Main.enlarge`).\n\nThis gives you **identical “collaborative link” behavior** between Java and Smalltalk – which is exactly the kind of portable semantics you seem to like.\n\n### 2.3 Lineup as a Smalltalk “session model”\n\nJava’s `lineup : List<Panel>` and navigation (`link`, `back`, `next`) can map very cleanly to **a GT-inspectable object graph**:\n\n* `FwSession` (or `FwNavigator`):\n\n  * ivar `lineup : OrderedCollection<FwPanel>`\n  * `origin` site\n  * commands:\n\n    * `case:` – log context / annotate session.\n    * `next` – `currentPanel nextItem`.\n    * `find:` – same regex semantics.\n    * `test:` – regex match for assertions.\n    * `link` – `lineup add: (FwPanel loadFrom: currentPanel slug: currentPanel firstLinkSlug)`.\n    * `back:` – pop panels until matching title.\n\nYou can then build GT views:\n\n* a **lineup column** (like the FedWiki row of pages)\n* a **current item inspector**\n* **context sites** list with clickable sitemaps, etc.\n\nSo, in the Smalltalk world, **fedwiki-java is basically a very compact spec of what `FwSession` should do.**\n"
+						}
+					]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:04:11.54896+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:04:11.54896+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "LfvOOA8ADgCkaVbYBSM+sg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "## 2. How this maps to fedwiki-smalltalk"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [
+						{
+							"__type" : "textSnippet",
+							"children" : {
+								"__type" : "snippets",
+								"items" : [ ]
+							},
+							"createEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"createTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2025-11-16T04:01:46.381551+01:00"
+								}
+							},
+							"editEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"editTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2025-11-16T04:03:28.044877+01:00"
+								}
+							},
+							"uid" : {
+								"__type" : "uid",
+								"uidString" : "uOYnMA8ADgCj/jQMBSM+sg=="
+							},
+							"paragraphStyle" : {
+								"__type" : "textStyle"
+							},
+							"string" : "The nice thing about the current repo is: you already have a **script (`input.txt`) and its expected transcript (`output.txt`)**.\n\nYou can treat that as a **cross-language acceptance test**:\n\n1. In fedwiki-smalltalk, implement a `FwScriptRunner` that:\n\n   * reads commands line by line (same syntax as Java).\n   * executes them on a `FwSession`.\n   * logs:\n\n     * cyan `<< n command >>` lines,\n     * green site names in lineup,\n     * purple location URL,\n     * page text blocks\n\n     (or at least something structurally equivalent).\n\n2. Run the *same* `input.txt` against:\n\n   * Java version (fedwiki-java) → capture `output.txt`\n   * Smalltalk version (fedwiki-smalltalk) → capture `output-smalltalk.txt`\n\n3. Compare the two logs (line-by-line or via a more relaxed matcher) to confirm that the Smalltalk implementation conforms:\n\n   * same sequence of visited `(site, slug)`\n   * same items where `find`/`test` succeed\n   * same failure modes, if any.\n\nThat gives you a **language-agnostic “Federated Wiki Navigation Spec”** maintained in text.\n"
+						}
+					]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:03:28.037973+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:03:41.276267+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "+w03Ng8ADgCkP7YSBSM+sg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "## 3. Using fedwiki-java as a test oracle for fedwiki-smalltalk"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [
+						{
+							"__type" : "textSnippet",
+							"children" : {
+								"__type" : "snippets",
+								"items" : [ ]
+							},
+							"createEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"createTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2025-11-16T04:03:08.787585+01:00"
+								}
+							},
+							"editEmail" : {
+								"__type" : "email",
+								"emailString" : "<unknown>"
+							},
+							"editTime" : {
+								"__type" : "time",
+								"time" : {
+									"__type" : "dateAndTime",
+									"dateAndTimeString" : "2025-11-16T04:03:14.821061+01:00"
+								}
+							},
+							"uid" : {
+								"__type" : "uid",
+								"uidString" : "A1ERNQ8ADgCkLm77BSM+sg=="
+							},
+							"paragraphStyle" : {
+								"__type" : "textStyle"
+							},
+							"string" : "`color.html` is a **thin, browser-side renderer** for the Java transcript:\n\n* It knows ANSI colors → CSS colors.\n* It recognizes:\n\n  * `<< n case ... >>` lines → collapsible `<details>` sections.\n  * hostnames in green → clickable icons using `frame.js` to send `doInternalLink` messages to the FedWiki frame.\n  * otherwise: generic ANSI to `<font color=...>`.\n\nFor fedwiki-smalltalk, you have two natural integration options:\n\n1. **Use it as-is, but point it at a Smalltalk-generated log**\n\n   * Expose a GT/Pharo HTTP endpoint that serves the Smalltalk session’s transcript as `output.txt`.\n   * Keep `color.html` in a FedWiki page, but change `url` to your Smalltalk server.\n\n   Then:\n\n   * The Java and Smalltalk implementations can both feed the *same* visualizer, proving that the semantics are consistent.\n\n2. **Re-implement its functionality as a GT view**\n\n   * In GT, treat each transcript line as an object with:\n\n     * kind (case header, host line, normal line),\n     * ANSI segments → text attributes,\n     * clickable sites that call your own `FwSession` to open the corresponding page.\n\n   * This way, **fedwiki-smalltalk becomes the “live” version of what `color.html` shows statically in the browser.**\n"
+						}
+					]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:03:14.812781+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:03:14.812781+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "PEFtNQ8ADgCkNeYFBSM+sg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "## 4. How the color.html plugin relates to Smalltalk/GT"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:02:13.079963+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:03:08.804533+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "QUq/MQ8ADgCkE5T4BSM+sg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "---\n"
+			},
+			{
+				"__type" : "textSnippet",
+				"children" : {
+					"__type" : "snippets",
+					"items" : [ ]
+				},
+				"createEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"createTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:02:26.851177+01:00"
+					}
+				},
+				"editEmail" : {
+					"__type" : "email",
+					"emailString" : "<unknown>"
+				},
+				"editTime" : {
+					"__type" : "time",
+					"time" : {
+						"__type" : "dateAndTime",
+						"dateAndTimeString" : "2025-11-16T04:02:26.851177+01:00"
+					}
+				},
+				"uid" : {
+					"__type" : "uid",
+					"uidString" : "D2uRMg8ADgCkIVU+BSM+sg=="
+				},
+				"paragraphStyle" : {
+					"__type" : "textStyle"
+				},
+				"string" : "## 5. Neighborhood and sitemap as bridge to your TopicMap / GT work\n\nFinally, the **neighborhood cache** in fedwiki-java is exactly the sort of structure you like to feed into TopicMaps / GT explorers:\n\n```java\nstatic Map<String, SiteMap> neighborhood = new HashMap<>();\n...\npublic static void enlarge(String site) {\n  if(!neighborhood.containsKey(site)) {\n    var sitemap = fetchSiteMap(\"http://%s/system/sitemap.json\");\n    neighborhood.put(site, sitemap);\n  }\n}\n```\n\nIn fedwiki-smalltalk you can:\n\n* Represent each `SiteMap` as a `TopicMap` fragment (site → pages as topics, links as associations).\n* Build GT visualizations that show:\n\n  * the *neighborhood graph* of sites discovered by a session,\n  * the *page graph* per site (`PageInfo.links`),\n  * overlays of session paths (`lineup`) as highlighted walks through this graph.\n\nIn that sense, **fedwiki-java gives you the “mechanical crawl semantics”; fedwiki-smalltalk gives you the “moldable visualization + analysis” on top of the same model.**\n"
+			}
+		]
+	},
+	"createEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"createTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2025-11-16T03:59:01.814593+01:00"
+		}
+	},
+	"editEmail" : {
+		"__type" : "email",
+		"emailString" : "<unknown>"
+	},
+	"editTime" : {
+		"__type" : "time",
+		"time" : {
+			"__type" : "dateAndTime",
+			"dateAndTimeString" : "2025-11-16T04:00:28.156398+01:00"
+		}
+	},
+	"pageType" : {
+		"__type" : "namedPage",
+		"title" : "fedwiki-java is a tiny, opinionated federated wiki interpreter"
+	},
+	"uid" : {
+		"__type" : "uuid",
+		"uuid" : "8cd35826-0f00-0e00-a3b9-1e4f05233eb2"
+	}
+}
