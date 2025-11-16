@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="414f4829-79d4-48fb-ad4d-591dae48e082" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/fedwiki_java.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fedwiki-java.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/run.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.sh" beforeDir="false" afterPath="$PROJECT_DIR$/test.sh" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="31XSDV5VpnJosUMGacltTKs7zVW" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Debug",
+    "Remote JVM Debug.fedwiki-java.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="fedwiki-java" />
+      <option name="REDIRECT_INPUT" value="true" />
+      <option name="INPUT_FILE" value="input.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="fedwiki-java" type="Remote">
+      <module name="fedwiki-java" />
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <option name="AUTO_RESTART" value="false" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="5005" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <method v="2">
+        <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_test" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Main" />
+      <item itemvalue="Remote JVM Debug.fedwiki-java" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="414f4829-79d4-48fb-ad4d-591dae48e082" name="Changes" comment="" />
+      <created>1755668807086</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1755668807086</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint type="java-method">
+          <url>file://$PROJECT_DIR$/Main.java</url>
+          <line>224</line>
+          <properties class="Main.Panel" method="load">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <condition expression="context != null &amp;&amp; !context.isEmpty() " language="JAVA" />
+          <url>file://$PROJECT_DIR$/Main.java</url>
+          <line>271</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
