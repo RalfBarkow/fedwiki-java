@@ -7,7 +7,5 @@ Class {
 { #category : #baseline }
 BaselineOfFedwikiJava >> baseline: spec [
 	<baseline>
-		^ spec for: #common do: [
-			spec package: 'FedwikiJava'
-		]
+	^ spec for: #common do: [ spec package: 'FedwikiJava' ]
 ]
